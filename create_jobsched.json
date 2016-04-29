@@ -1,0 +1,78 @@
+{
+  "odata.metadata":"https://myaccount.myregion.batch.azure.com/$metadata#jobschedules/@Element",
+  "id":"myjobschedule1",
+  "schedule": {
+    "doNotRunUntil":"2016-04-29T05:30:00.000Z",
+    "recurrenceInterval":"PT4H"
+  },
+  "jobSpecification": {
+    "priority":100,
+    "constraints": {
+      "maxWallClockTime":"PT1H",
+      "maxTaskRetryCount":-1
+    },
+    "jobManagerTask": {
+      "id":"mytask1",
+      "commandLine":"/bin/bash -c 'export LC_ALL=en_US.UTF-8; ./task.sh'",
+      "resourceFiles": [ {
+        "blobSource":"yourbloburi&sas",
+        "filePath":"task.sh"
+      }], 
+      "environmentSettings": [ {
+        "name":"VAR1",
+        "value":"hello"
+      } ],
+      "constraints": {
+        "maxWallClockTime":"PT1H",
+        "maxTaskRetryCount":0,
+        "retentionTime":"PT1H"
+      },
+      "killJobOnCompletion":false,
+      "runElevated":true,
+      "runExclusive":true
+    },
+    "poolInfo": {
+      "autoPoolSpecification": {
+        "autoPoolIdPrefix":"mypool",
+        "poolLifetimeOption":"job",
+        "pool": {
+          "vmSize":"STANDARD_D1",
+          "virtualMachineConfiguration": {
+            "imageReference": {
+              "publisher":"Canonical",
+              "offer":"UbuntuServer",
+              "sku":"14.04.4-LTS",
+              "version":"latest"
+            },
+            "nodeAgentSKUId":"batch.node.ubuntu 14.04"
+          },
+          "resizeTimeout":"PT15M",
+          "targetDedicated":1,
+          "maxTasksPerNode":1,
+          "taskSchedulingPolicy": {
+            "nodeFillType":"Spread"
+          },
+          "enableAutoScale":false,
+          "enableInterNodeCommunication":false,
+          "startTask": {
+            "commandLine":"/bin/bash -c 'export LC_ALL=en_US.UTF-8; ./starttask.sh'",
+            "resourceFiles": [ {
+              "blobSource":"yourbloburi&sas",
+              "filePath":"starttask.sh"
+            } ],
+            "environmentSettings": [ {
+              "name":"VAR2",
+              "value":"Chao"
+            } ],
+            "runElevated":true,
+            "waitForSuccess":true
+          },
+          "metadata": [ {
+            "name":"myproperty",
+            "value":"myvalue"
+          } ]
+        }
+      }
+    }
+  }
+}
