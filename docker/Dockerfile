@@ -8,7 +8,7 @@ RUN \
   pip install azure-storage==0.31.0 pytz && \
   rm -rf /var/lib/apt/lists/*
 
-ADD wordcouny.py /root/wordcouny.py
+ADD wordcount.py /root/wordcount.py
 
 ENV HOME /root
 
